@@ -104,7 +104,7 @@ public class MainActivity extends AppCompatActivity {
         int colType = gameManager.checkCollision();
         if(colType == GameManager.OBSTACLE)
         {
-            playSound();
+            signal.playSound();
             updateLivesUI();
             signal.toast("ASTROID HIT!");
             signal.vibrate();
@@ -200,15 +200,5 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-
-    private void playSound() {
-        try {
-            Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-            Ringtone r = RingtoneManager.getRingtone(getApplicationContext(), notification);
-            r.play();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 }
 

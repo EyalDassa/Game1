@@ -3,6 +3,7 @@ package com.example.game1;
 import static androidx.core.content.ContextCompat.getSystemService;
 
 import android.content.Context;
+import android.media.MediaPlayer;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
@@ -16,6 +17,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 public class MySignal {
 
     private static MySignal instance;
+    private static MediaPlayer hitSound;
     private Context context;
 
     private MySignal(Context context) {
@@ -25,6 +27,7 @@ public class MySignal {
     public static void init(Context context) {
         if (instance == null) {
             instance = new MySignal(context.getApplicationContext());
+            hitSound = MediaPlayer.create(context, R.raw.punch);
         }
     }
 
@@ -62,6 +65,10 @@ public class MySignal {
             // deprecated in API 26
             v.vibrate(20);
         }
+    }
+
+    public void playSound() {
+        hitSound.start();
     }
 
 }
