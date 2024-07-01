@@ -1,5 +1,7 @@
 package com.example.game1;
 
+import android.animation.AnimatorInflater;
+import android.animation.AnimatorSet;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.content.Intent;
@@ -74,11 +76,18 @@ public class MainActivity extends AppCompatActivity {
         for (int i = GameManager.ROWS - 3; i >= 0 ; i--) {
             for (int j = GameManager.COLS - 1; j >= 0 ; j--) {
                 object = gameManager.mapPositionValue(i, j);
-                if (object != GameManager.BLANK){
+                if (object == GameManager.STAR && gameManager.getLives() == 3)
+                    cleanSingle(i,j);
+                else if (object != GameManager.BLANK){
                     moveObject(i, j,object);
                 }
             }
         }
+    }
+
+    private void cleanSingle(int i, int j) {
+        gameManager.cleanSingle(i,j);
+        map[i][j].setImageResource(0);
     }
 
     private void cleanLastObjectRow() {
@@ -104,13 +113,20 @@ public class MainActivity extends AppCompatActivity {
         int colType = gameManager.checkCollision();
         if(colType == GameManager.OBSTACLE)
         {
-            signal.playSound();
+            signal.playHit();
             updateLivesUI();
             signal.toast("ASTROID HIT!");
             signal.vibrate();
             Animation animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.blink_animation);
             map[GameManager.ROWS - 1][gameManager.getPlayerPosition()].startAnimation(animation);
             
+        }
+        else if(colType == GameManager.STAR){
+            signal.playStar();
+            updateLivesUI();
+            signal.toast("STAR!");
+            signal.vibrate();
+            //TODO ANIMATION
         }
         if(gameManager.getLives() == 0){
             gameManager.reset(); // endless game
@@ -123,12 +139,29 @@ public class MainActivity extends AppCompatActivity {
     private void moveObject(int i, int j, int object) {
         map[i][j].setImageResource(0);
         gameManager.moveObject(i, j,object);
-        map[i+1][j].setImageResource(R.drawable.img_astroid);
+        if(object == GameManager.STAR)
+            map[i+1][j].setImageResource(R.drawable.img_star);
+        else
+            map[i+1][j].setImageResource(R.drawable.img_astroid);
     }
 
     private void spawnObstacle() {
         int col = gameManager.spawnObstacle();
         map[0][col].setImageResource(R.drawable.img_astroid);
+    }
+
+    private void spawnStar() {
+        int col = gameManager.spawnStar();
+        map[0][col].setImageResource(R.drawable.img_star);
+    }
+
+
+    private void spawnObject() {
+        int num = (int) (Math.random() * 10);
+        if(num >= 3 && gameManager.getLives() < 3)
+            spawnStar();
+        else
+            spawnObstacle();
     }
 
     private void spawnPlayer() {
@@ -149,21 +182,49 @@ public class MainActivity extends AppCompatActivity {
         map[0][0] = findViewById(R.id.game_IMG_00);
         map[0][1] = findViewById(R.id.game_IMG_01);
         map[0][2] = findViewById(R.id.game_IMG_02);
+        map[0][3] = findViewById(R.id.game_IMG_03);
+        map[0][4] = findViewById(R.id.game_IMG_04);
         map[1][0] = findViewById(R.id.game_IMG_10);
         map[1][1] = findViewById(R.id.game_IMG_11);
         map[1][2] = findViewById(R.id.game_IMG_12);
+        map[1][3] = findViewById(R.id.game_IMG_13);
+        map[1][4] = findViewById(R.id.game_IMG_14);
         map[2][0] = findViewById(R.id.game_IMG_20);
         map[2][1] = findViewById(R.id.game_IMG_21);
         map[2][2] = findViewById(R.id.game_IMG_22);
+        map[2][3] = findViewById(R.id.game_IMG_23);
+        map[2][4] = findViewById(R.id.game_IMG_24);
         map[3][0] = findViewById(R.id.game_IMG_30);
         map[3][1] = findViewById(R.id.game_IMG_31);
         map[3][2] = findViewById(R.id.game_IMG_32);
+        map[3][3] = findViewById(R.id.game_IMG_33);
+        map[3][4] = findViewById(R.id.game_IMG_34);
         map[4][0] = findViewById(R.id.game_IMG_40);
         map[4][1] = findViewById(R.id.game_IMG_41);
         map[4][2] = findViewById(R.id.game_IMG_42);
+        map[4][3] = findViewById(R.id.game_IMG_43);
+        map[4][4] = findViewById(R.id.game_IMG_44);
         map[5][0] = findViewById(R.id.game_IMG_50);
         map[5][1] = findViewById(R.id.game_IMG_51);
         map[5][2] = findViewById(R.id.game_IMG_52);
+        map[5][3] = findViewById(R.id.game_IMG_53);
+        map[5][4] = findViewById(R.id.game_IMG_54);
+        map[6][0] = findViewById(R.id.game_IMG_60);
+        map[6][1] = findViewById(R.id.game_IMG_61);
+        map[6][2] = findViewById(R.id.game_IMG_62);
+        map[6][3] = findViewById(R.id.game_IMG_63);
+        map[6][4] = findViewById(R.id.game_IMG_64);
+        map[7][0] = findViewById(R.id.game_IMG_70);
+        map[7][1] = findViewById(R.id.game_IMG_71);
+        map[7][2] = findViewById(R.id.game_IMG_72);
+        map[7][3] = findViewById(R.id.game_IMG_73);
+        map[7][4] = findViewById(R.id.game_IMG_74);
+        map[8][0] = findViewById(R.id.game_IMG_80);
+        map[8][1] = findViewById(R.id.game_IMG_81);
+        map[8][2] = findViewById(R.id.game_IMG_82);
+        map[8][3] = findViewById(R.id.game_IMG_83);
+        map[8][4] = findViewById(R.id.game_IMG_84);
+
 
         game_BTN_left = findViewById(R.id.game_BTN_left);
         game_BTN_right = findViewById(R.id.game_BTN_right);
@@ -179,7 +240,7 @@ public class MainActivity extends AppCompatActivity {
     private void tick() {
         updateMap();
         if(toSpawn)
-            spawnObstacle();
+            spawnObject();
         toSpawn = !toSpawn;
     }
 

@@ -18,6 +18,7 @@ public class MySignal {
 
     private static MySignal instance;
     private static MediaPlayer hitSound;
+    private static MediaPlayer plusLife;
     private Context context;
 
     private MySignal(Context context) {
@@ -28,6 +29,7 @@ public class MySignal {
         if (instance == null) {
             instance = new MySignal(context.getApplicationContext());
             hitSound = MediaPlayer.create(context, R.raw.punch);
+            plusLife = MediaPlayer.create(context, R.raw.plus_life);
         }
     }
 
@@ -67,8 +69,10 @@ public class MySignal {
         }
     }
 
-    public void playSound() {
+    public void playHit() {
         hitSound.start();
     }
+
+    public void playStar() {plusLife.start();}
 
 }

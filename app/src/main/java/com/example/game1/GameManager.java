@@ -1,14 +1,12 @@
 package com.example.game1;
 
-import java.util.ArrayList;
-
 public class GameManager {
 
     private static GameManager instance;
-    public static final int ROWS = 6;
-    public static final int COLS = 3;
+    public static final int ROWS = 9;
+    public static final int COLS = 5;
     public static final int BLANK = 0;
-    //public static final int COIN = 1;
+    public static final int STAR = 1;
     public static final int OBSTACLE = 2;
     public static final int PLAYER = 3;
     private Player player;
@@ -31,12 +29,18 @@ public class GameManager {
     }
 
     public void spawnPlayer() {
-        map[5][COLS / 2] = PLAYER;
+        map[ROWS - 1][COLS / 2] = PLAYER;
     }
 
     public int spawnObstacle() {
         int col = (int) (Math.random() * COLS);
         map[0][col] = OBSTACLE;
+        return col;
+    }
+
+    public int spawnStar() {
+        int col = (int) (Math.random() * COLS);
+        map[0][col] = STAR;
         return col;
     }
 
@@ -46,10 +50,10 @@ public class GameManager {
 
     public void movePlayer(int direction) {
         int position = getPlayerPosition();
-        map[5][position] = BLANK;
+        map[ROWS - 1][position] = BLANK;
         player.setPosition(direction);
         position = player.getPosition();
-        map[5][position] = PLAYER;
+        map[ROWS - 1][position] = PLAYER;
     }
 
     public int mapPositionValue(int row, int col) {
@@ -68,6 +72,10 @@ public class GameManager {
             lives--;
             colType = OBSTACLE;
         }
+        else if(map[ROWS - 2][playerCol] == STAR){
+            lives++;
+            colType = STAR;
+        }
         return colType;
     }
 
@@ -83,5 +91,9 @@ public class GameManager {
         for (int i = 0; i < COLS; i++) {
             map[ROWS - 2][i] = BLANK;
         }
+    }
+
+    public void cleanSingle(int i, int j) {
+        map[i][j] = BLANK;
     }
 }
