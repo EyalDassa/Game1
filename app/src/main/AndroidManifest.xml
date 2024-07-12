@@ -3,29 +3,45 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION"/>
 
     <application
+        android:name=".Utilities.MyApp"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher_astronaut"
-        android:label="@string/app_name"
+        android:label="Astronaut"
         android:roundIcon="@mipmap/ic_launcher_astronaut_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Game1"
-        tools:targetApi="31"
-        android:largeHeap="true"
-        android:hardwareAccelerated="false">
+        tools:targetApi="31">
+
         <activity
-            android:name=".MainActivity"
-            android:screenOrientation="portrait"
-            android:exported="true">
+            android:name=".Activities.HighScoreActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Activities.MainActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".Activities.MenuActivity"
+            android:exported="true"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyChZz7AVoCxaO7qk5mrz0DkJPPvwoJSkao" />
     </application>
 
 </manifest>

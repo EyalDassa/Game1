@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/menu_LAY_menu"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activities.MenuActivity"
+    android:keepScreenOn="true">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:src="@drawable/img_space" />
+
+    <RelativeLayout
+        android:id="@+id/menu_LAY_middleContent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/menu_LBL_welcome"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:paddingHorizontal="20dp"
+            android:text="Astronaut"
+            android:textSize="60sp"
+            android:textStyle="bold"
+            android:textColor="#6D4CFF"
+            />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/menu_LBL_mode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Choose Game Mode"
+            android:layout_below="@id/menu_LBL_welcome"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="10dp"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="#6D4CFF"/>
+
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+            android:id="@+id/menu_BTN_buttons"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/menu_LBL_mode"
+            android:backgroundTint="#4D65FF"
+            android:text="BUTTONS"
+            android:textColor="@color/white"
+            app:iconTint="@color/white" />
+
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+            android:id="@+id/menu_BTN_sensors"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignEnd="@+id/menu_LBL_welcome"
+            android:layout_below="@+id/menu_LBL_mode"
+            android:backgroundTint="#4D65FF"
+            android:text="SENSORS"
+            android:textColor="@color/white"
+            app:iconTint="@color/white" />
+    </RelativeLayout>
+
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        android:id="@+id/menu_BTN_highScore"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="50dp"
+        android:backgroundTint="#4D65FF"
+        android:text="HIGH SCORE"
+        android:textColor="@color/white"
+        app:iconTint="@color/white" />
+
+
+</RelativeLayout>

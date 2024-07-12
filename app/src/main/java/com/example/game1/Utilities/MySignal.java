@@ -1,17 +1,13 @@
-package com.example.game1;
-
-import static androidx.core.content.ContextCompat.getSystemService;
+package com.example.game1.Utilities;
 
 import android.content.Context;
 import android.media.MediaPlayer;
-import android.media.Ringtone;
-import android.media.RingtoneManager;
-import android.net.Uri;
 import android.os.Build;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
 import android.widget.Toast;
 
+import com.example.game1.R;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 public class MySignal {
@@ -73,6 +69,8 @@ public class MySignal {
         hitSound.start();
     }
 
-    public void playStar() {plusLife.start();}
+    public void playStar() {
+        plusLife.start();
+    }
 
 }
